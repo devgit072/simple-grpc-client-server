@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option go_package = "employeepb";
+
+package employee;
+
+message EmployeesRequest {
+  int32 number_of_employees = 1;
+}
+
+message Employee {
+  string name = 1;
+  int32 age = 2;
+  string address = 3;
+}
+
+message EmployeeResponse {
+  int64 id = 1;
+  string name = 2;
+  int32 age = 3;
+  string address = 4;
+}
+
+message Response {
+  bool success = 1;
+}
+
+service EmployeeService {
+  // Server streaming api.
+  rpc ServerSreaming(EmployeesRequest) returns (stream EmployeeResponse) {};
+
+  // Client streaming api.
+  rpc ClientStreaming(stream Employee) returns (Response) {};
+
+  // Bi-directional streaming api.
+  rpc BidirectionalStreaming(stream Employee) returns (stream EmployeeResponse) {};
+}
